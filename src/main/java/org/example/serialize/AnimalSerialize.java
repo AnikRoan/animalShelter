@@ -10,6 +10,7 @@ import org.example.model.Animal;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,16 +42,18 @@ public class AnimalSerialize {
         }
     }
 
-    public Optional<List<Animal>> deSerialize() {
+    public List<Animal> deSerialize() {
+
+
         try {
-            List<Animal>l = Optional.of(objectMapper.readValue
-                    (new File(path + exception),new TypeReference<List<Animal>>() {});
-            return Optional.of(l);
+            List<Animal> animals = objectMapper.readValue(new File(path+exception), new TypeReference<List<Animal>>() {});
+            return animals;
+
 
 
         } catch (IOException e) {
             System.out.println("");
         }
-        return Optional.empty();
+        return new ArrayList<>();
     }
 }

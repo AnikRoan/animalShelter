@@ -5,16 +5,16 @@ import org.example.serialize.AnimalSerialize;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 public class PetShelter {
-    Animal animal;
 
-    AnimalSerialize animalSerialize = new AnimalSerialize();
-    private List<Animal> animals = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+
+   public AnimalSerialize animalSerialize = new AnimalSerialize();
+    private final List<Animal> animals = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
 
     private void addPet() {
         System.out.println("fill in the details");
@@ -37,6 +37,7 @@ public class PetShelter {
 
 
     public void visual() {
+        System.out.println("you want 1 add pet 2 show all pet 3 remove pet 4 exit");
 
         boolean b = true;
         while (b) {
@@ -55,11 +56,10 @@ public class PetShelter {
     }
 
     private void removePet() {
-        System.out.println("enter the name og the pet you want to delete");
+        System.out.println("enter the name or the pet you want to delete");
         String name = scanner.nextLine();
-        if (animals.contains(name)) {
-            animals.remove(name);
-        }
+        for(int i=0;i<animals.size();i++){
+            if(animals.get(i).getName().equals(name)) animals.remove(i);
     }
 }
 
