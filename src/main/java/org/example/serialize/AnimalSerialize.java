@@ -1,16 +1,20 @@
 package org.example.serialize;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.example.enams.Extensions;
 import org.example.model.Animal;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AnimalSerialize {
+
     //2. Користувацьке меню:
     //- Додаток повинен відображати меню з наступними опціями:
     //- Додати тварину ( add pet ): Запитуйте користувача про деталі тварини і додавайте її до списку прихистку.
@@ -20,17 +24,14 @@ public class AnimalSerialize {
     //3. Зберігання даних:
     //- При закритті додатка (через опцію "Вихід" або будь-які інші засоби) всі дані про тварин повинні зберігатися у файлі за допомогою бібліотеки Jackson.
     //- При наступному запуску ці дані повинні бути прочитані та завантажені назад до додатка.
-    private final ObjectMapper objectMapper;
-    private final Exception exception;
+    private final ObjectMapper objectMapper = new JsonMapper();
+    private final Extensions exception = Extensions.JSON;
     private final String path = "src/main/resources/animal";
 
 
-    public AnimalSerialize(ObjectMapper objectMapper, Exception exception) {
-        this.objectMapper = objectMapper;
-        this.exception = exception;
-    }
 
-    public void serialize(Animal animal) {
+
+    public void serialize(List<Animal> animal) {
 
 
         try {
@@ -40,9 +41,12 @@ public class AnimalSerialize {
         }
     }
 
-    public Optional<Animal> deSerialize() {
+    public Optional<List<Animal>> deSerialize() {
         try {
-            return Optional.of(objectMapper.readValue(new File(path + exception), Animal.class));
+            List<Animal>l = Optional.of(objectMapper.readValue
+                    (new File(path + exception),new TypeReference<List<Animal>>() {});
+            return Optional.of(l);
+
 
         } catch (IOException e) {
             System.out.println("");
