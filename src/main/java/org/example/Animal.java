@@ -1,9 +1,8 @@
-package org.example.model;
+package org.example;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 
@@ -20,7 +19,10 @@ public class Animal {
         this.name = name;
     }
 
-    public Animal(String name, String breed, int age) {
+    @JsonCreator
+    public Animal(@JsonProperty("name") String name,
+                  @JsonProperty("breed") String breed,
+                  @JsonProperty("age") int age) {
         this.name = name;
         this.breed = breed;
         this.age = age;
