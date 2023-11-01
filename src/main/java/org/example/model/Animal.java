@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,13 +8,13 @@ public class Animal {
 
     private String name;
     private String breed;
-    private double age;
+    private String age;
 
 
     @JsonCreator
     public Animal(@JsonProperty("name") String name,
                   @JsonProperty("breed") String breed,
-                  @JsonProperty("age") double age) {
+                  @JsonProperty("age") String age) {
         this.name = name;
         this.breed = breed;
         this.age = age;
@@ -28,7 +28,7 @@ public class Animal {
         return breed;
     }
 
-    public double getAge() {
+    public String getAge() {
         return age;
     }
 
@@ -40,7 +40,15 @@ public class Animal {
         this.breed = breed;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "name: " + name + '\'' +
+                " breed: " + breed + '\'' +
+                " age: " + age +"\n";
     }
 }
