@@ -42,7 +42,7 @@ public class PetShelter {
     }
 
     private void showAll() {
-        if(!animalChecking(animals)){
+        if (!animalChecking(animals)) {
             return;
 
         }
@@ -55,9 +55,9 @@ public class PetShelter {
 
     private void removePet() {
         boolean valid = true;
-//        if(!animalChecking(animals)){
-//            return;
-//        }
+        if (!animalChecking(animals)) {
+            return;
+        }
 
 
         System.out.println(" pets name and numbers: ");
@@ -66,17 +66,14 @@ public class PetShelter {
         }
 
         while (valid) {
-            System.out.print("enter the pet number, if your mind to enter 000\n ");
+            System.out.print("enter the pet number, ");
 
             try {
                 int number = scanner.nextInt();
 
-                if (number == 000) {
-                    break;
-                }
-
                 animals.remove(number);
                 valid = false;
+
 
             } catch (Exception e) {
                 System.out.println(" wrong number, try once more");
@@ -98,7 +95,7 @@ public class PetShelter {
             System.out.println("ACTIONS:\n" +
                     "1 add pet\n" +
                     "2 show all pets\n" +
-                    "3 remove pet\n"+
+                    "3 remove pet\n" +
                     "4 exit and add all changes");
 
             switch (scanner.next()) {
