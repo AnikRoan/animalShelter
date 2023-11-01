@@ -1,64 +1,64 @@
 package org.example;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class PetShelter {
-   // public final AnimalSerialize animalSerialize;
     private final AnimalSerialize animalSerialize = new AnimalSerialize();
-    private final List<Animal> animals = new ArrayList<>();
+    private List<Animal> animals = new ArrayList<>(animalSerialize.deSerialization());
     private final Scanner scanner = new Scanner(System.in);
 
     private void addPet() {
         System.out.println("fill in the details");
-        System.out.println("name");
+
+        System.out.print("name: ");
         String name = scanner.next();
-        System.out.println("breed");
+
+        System.out.print("breed: ");
         String breed = scanner.next();
-        System.out.println("age");
-        int age = scanner.nextInt();
+
+        System.out.print("age: ");
+        double age = scanner.nextDouble();
 
         Animal animal = new Animal(name, breed, age);
         animals.add(animal);
-        //animalSerialize.serialize(animals);
-        // visual();
+
 
     }
 
     private void showAll() {
-        if (!animals.isEmpty()) {
-
-            for (Animal a : animals) {
-                System.out.println(" Name: " + a.getName() + " Breed: " + a.getBreed() + " Age: " + a.getAge());
-            }
-        } else {
-
-            List<Animal> an = animalSerialize.deSerialize();
-            for (Animal d : an) {
-                System.out.println(d.getName() +" " + d.getBreed()+" " + d.getAge());
-            }
+        for (Animal animal : animals) {
+            System.out.println("name " + animal.getName()
+                    + " breed " + animal.getBreed()
+                    + " age " + animal.getAge());
         }
-        // visual();
+
+
+    }
+
+    private void saveAll() {
+        animalSerialize.serialize(animals);
     }
 
 
     public void visual() {
-        boolean b = true;
+        boolean exit = true;
 
 
-        while (b) {
-            System.out.println("you want:\n 1 add pet\n 2 show all pet\n 3 remove pet\n 4 exit");
-            switch (scanner.nextInt()) {
-                case 1 -> addPet();
-                case 2 -> showAll();
-                case 3 -> removePet();
-                case 4 -> {
-                    animalSerialize.serialize(animals);
-                    b = false;
+        while (exit) {
+            System.out.println("ACTIONS:\n 1 add pet\n 2 show all pets\n 3 remove pet\n 4 exit and add all changes");
+            switch (scanner.next()) {
+                case "1" -> addPet();
+                case "2" -> showAll();
+                case "3" -> removePet();
+                case "4" -> {
+                    saveAll();
+                    exit = false;
                 }
-
+                default -> System.out.println("THERE IS NO SUCH COMMAND!!! TRY ONCE MORE\n");
 
             }
         }
@@ -66,12 +66,15 @@ public class PetShelter {
 
 
     private void removePet() {
-        System.out.println("enter the name or the pet you want to delete");
-        String name = scanner.nextLine();
+        System.out.println(" pets name and numbers ");
         for (int i = 0; i < animals.size(); i++) {
-            if (animals.get(i).getName().equals(name)) animals.remove(i);
+            System.out.println("name " + animals.get(i).getName() + " number: " + i);
         }
-        visual();
+        System.out.println("enter number: ");
+        int number = scanner.nextInt();
+        animals.remove(animals.get(number));
+
+
     }
 
 }

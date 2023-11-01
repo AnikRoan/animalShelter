@@ -1,56 +1,51 @@
 package org.example;
 
-
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import java.util.List;
 
 
 public  class AnimalSerialize {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Extensions exception = Extensions.JSON;
+    private final ObjectMapper objectMapper = new JsonMapper();
+    private final Extensions extension = Extensions.JSON;
     private final String path = "src/main/resources/animal.";
-    private final    File file = new File(path + exception);
+    private final    File file = new File(path + extension);
 
 
     public void serialize(List<Animal> animals) {
-
-
         try {
-            if (file.exists()) {
-        List<Animal> l = objectMapper.readValue(file, new TypeReference<>() {
-                });
-                animals.addAll(l);
-                objectMapper.writeValue(file, animals);
-
-
+            if (!file.exists()) {
+                file.createNewFile();
             }
             objectMapper.writeValue(file, animals);
+
         } catch (IOException e) {
-            System.out.println("Ошибка при сереализации");
+            System.out.println("serialization error "+e.getMessage());
+
         }
 
 
     }
 
-    public List<Animal> deSerialize() {
-        List<Animal> animals = new ArrayList<>();
+    public List<Animal> deSerialization() {
+        if(file.exists()) {
+            try (FileReader fileReader = new FileReader(file)) {
+                return  Arrays.asList(objectMapper.readValue(fileReader, Animal[].class));
 
-        try (FileReader fileReader = new FileReader(file)) {
-            animals = objectMapper.readValue(fileReader, new TypeReference<>() {
-            });
-        } catch (IOException e) {
-            System.err.println("Ошибка при десериализации: " + e.getMessage());
+            } catch (IOException e) {
+                System.err.println("deSerialization error " + e.getMessage());
+            }
         }
 
-        return animals;
+        return new ArrayList<>();
     }
 }
