@@ -41,7 +41,7 @@ public class AnimalSerialize {
     public List<Animal> deSerialization() {
         if (file.exists()) {
             try (FileReader fileReader = new FileReader(file)) {
-                return Arrays.asList(objectMapper.readValue(fileReader, Animal[].class));
+                return new ArrayList<>(Arrays.asList(objectMapper.readValue(fileReader, Animal[].class)));
 
             } catch (IOException e) {
                 System.err.println("deSerialization error " + e.getMessage());
