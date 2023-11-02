@@ -18,12 +18,8 @@ import java.util.List;
 public class AnimalSerialize {
 
     private final ObjectMapper objectMapper = new JsonMapper();
-    private final Extensions extension = Extensions.JSON;
-    private final String path = "src/main/resources/animal.";
-    private final File file = new File(path + extension);
 
-
-    public void serialize(List<Animal> animals) {
+    public void serialize(List<Animal> animals, File file) {
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -38,16 +34,19 @@ public class AnimalSerialize {
 
     }
 
-    public List<Animal> deSerialization() {
-        if (file.exists()) {
-            try (FileReader fileReader = new FileReader(file)) {
-                return new ArrayList<>(Arrays.asList(objectMapper.readValue(fileReader, Animal[].class)));
+    public List<Animal> deSerialization(File file) {
+          if(file.exists()){
+              try (FileReader fileReader = new FileReader(file)) {
+                  return new ArrayList<>(Arrays.asList(objectMapper.readValue(fileReader, Animal[].class)));
 
-            } catch (IOException e) {
-                System.err.println("deSerialization error " + e.getMessage());
-            }
-        }
+              } catch (IOException e) {
+                  System.out.println("Exception "+e.getMessage());
+
+              }
+          }
 
         return new ArrayList<>();
+
+
     }
 }

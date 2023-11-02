@@ -2,14 +2,9 @@ package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Objects;
 
-@Getter
-@Setter
 
 public class Animal {
 
@@ -28,15 +23,12 @@ public class Animal {
     }
 
 
-
-
-
-
-
-
-
-
-
+    public String toString() {
+        return
+                "name: " + name + '\'' +
+                        " breed: " + breed + '\'' +
+                        " age: " + age + "\n";
+    }
 
 
     @Override
@@ -44,11 +36,36 @@ public class Animal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return Objects.equals(name, animal.name) && Objects.equals(breed, animal.breed) && Objects.equals(age, animal.age);
+        return Objects.equals(name, animal.name) &&
+                Objects.equals(breed, animal.breed) && Objects.equals(age, animal.age);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(name, breed, age);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getBreed() {
+        return this.breed;
+    }
+
+    public String getAge() {
+        return this.age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

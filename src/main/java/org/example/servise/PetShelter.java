@@ -2,17 +2,23 @@ package org.example.servise;
 
 
 import org.example.model.Animal;
+import org.example.model.Extensions;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class PetShelter {
+    private final Extensions extension = Extensions.JSON;
+    private final String path = "src/main/resources/animal.";
+    private final File file = new File(path + extension);
     private final AnimalSerialize animalSerialize = new AnimalSerialize();
-    private List<Animal> animals = new ArrayList<>(animalSerialize.deSerialization());
+    private List<Animal> animals = new ArrayList<>(animalSerialize.deSerialization(file));
     private final Scanner scanner = new Scanner(System.in);
+
 
     private void addPet() {
         System.out.println("FILL IN THR DETAILS");
@@ -50,7 +56,7 @@ public class PetShelter {
     }
 
     private void saveAll() {
-        animalSerialize.serialize(animals);
+        animalSerialize.serialize(animals,file);
     }
 
     private void removePet() {
@@ -104,6 +110,7 @@ public class PetShelter {
                 case "3" -> removePet();
                 case "4" -> {
                     saveAll();
+                    scanner.close();
                     exit = false;
                 }
                 default -> System.out.println("THERE IS NO SUCH COMMAND!!! TRY ONCE MORE\n");
